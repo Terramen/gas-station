@@ -1,0 +1,47 @@
+/*.index_background {
+    !*background-image: url("Silver-Background-Pics.png");*!
+    background: orange;
+}*/
+body{
+    background-color: #f0f0f0 !important;
+}
+main {
+    background-color: #f0f0f0;
+
+}
+.page-header {
+    margin: auto;
+}
+.block-border {
+    border-radius: 15px;
+}
+.table-padding {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.page-section {
+    margin: 40px 0;
+}
+.block-padding {
+    padding: 30px 40px;
+    min-height: 340px;
+}
+.block-content {
+    position: relative;
+    width: 70%;
+}
+.block {
+    position: relative;
+    display: flex;
+}
+.first-block-background {
+    background-image: url("orange-background.jpg");
+}
+
+.second-block-background {
+    background-image: url("green-background.jpg");
+}
+
+.block__item {
+    margin-bottom: 20px;
+}
