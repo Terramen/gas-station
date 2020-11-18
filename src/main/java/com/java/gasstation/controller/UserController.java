@@ -1,10 +1,13 @@
 package com.java.gasstation.controller;
 
+import com.java.gasstation.model.Role;
 import com.java.gasstation.model.User;
 import com.java.gasstation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +34,11 @@ public class UserController {
     }
 
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user") User user) {
+    public String saveUser(@ModelAttribute("user") User user, BindingResult result) {
+        UserDetails existing = userService.loadUserByUsername(user.getEmail());
+        if (existing != null){
+            result.rejectValue("email", null, "There is already an account registered with that email");
+        }
         userService.saveUsers(user);
         return "redirect:/";
     }

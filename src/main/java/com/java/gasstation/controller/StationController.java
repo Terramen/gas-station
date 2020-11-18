@@ -16,10 +16,16 @@ public class StationController {
     @Autowired
     private StationService stationService;
 
-    @GetMapping("/admin/list")
+    @GetMapping("/list")
     public String viewList(Model model) {
         model.addAttribute("listStations", stationService.getAllStations());
         return "list";
+    }
+
+    @GetMapping("/admin/list")
+    public String viewAdminList(Model model) {
+        model.addAttribute("listStations", stationService.getAllStations());
+        return "admin_list";
     }
 
     @PostMapping("/admin/list/saveStation")

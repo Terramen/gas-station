@@ -41,9 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     @Override
     public void saveUsers(User user) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-/*        if(user.getRole() == null) {
-            user.setRole(Collections.list(new Role().getAuthority()));
-        }*/
+        user.setRole(Role.ROLE_USER);
         user.setCreated(timestamp);
         userRepository.save(user);
     }

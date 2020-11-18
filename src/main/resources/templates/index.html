@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -24,13 +24,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/list">Список заправочных станций</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/fuel">Топливо</a>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" href="/admin">Админ-панель</a>
                 </li>
             </ul>
             <form class="form-inline">
-                <a th:href = "@{/register}" class = "btn btn-primary mx-2">Зарегистрироваться</a>
-                <a th:href = "@{/login}" class = "btn btn-primary mx-2">Войти</a>
+                <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                    Вы вошли как:
+                    <div sec:authentication="name"></div>
+                </div>
+                <a th:href = "@{/register}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Зарегистрироваться</a>
+                <a th:href = "@{/login}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Войти</a>
+                <a th:href = "@{/logout}" sec:authorize ="isAuthenticated()" class = "btn btn-primary mx-2">Выйти</a>
             </form>
         </div>
     </nav>
@@ -74,6 +79,13 @@
             <div>
                 <p align="center">Цена в BYN на <span th:text="${date}"></span></p>
             </div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">Text visible to admin.</div>
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                Authenticated username:
+                <div sec:authentication="name"></div>
+            </div>
+
+<!--            <div sec:authorize = ”isAuthenticated()”>Text visible to auth.</div>-->
         </div>
     </section>
     <section class="page-section">
