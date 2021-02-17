@@ -36,11 +36,10 @@
 <div class = "container">
     <h1>Изменение данных о заправочной станции</h1>
     <hr>
-    <form action="#" th:action="@{/list/saveStation}" th:object = "${station}" method="post">
+    <form action="#" th:action="@{/admin/list/saveStation}" th:object = "${station}" method="post">
         <input type="hidden" th:field = "*{id}" />
         <input type="text" th:field = "*{location}" placeholder="location" class="form-control mb-4 col-4">
         <input type="text" th:field = "*{phone}" placeholder="phone" class="form-control mb-4 col-4">
-        <input type="text" th:field = "*{fuel}" placeholder="Fuel" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info col-2">Сохранить</button>
     </form>
 </div>

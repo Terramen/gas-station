@@ -22,13 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
-/*    @Autowired
-    UserDetailsService userDetailsService;*/
-
-/*    @Autowired
-    public SecurityConfig(UserService userService) {
-        this.userService = userService;
-    }*/
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -40,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/list").permitAll()
                 .antMatchers("/saveUser").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/personalAccount").hasAnyRole("USER","ADMIN")
+                .antMatchers("/personalAccount/*").hasAnyRole("USER","ADMIN")
                 .antMatchers("/admin/*").hasRole("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
@@ -61,4 +56,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
+
 }

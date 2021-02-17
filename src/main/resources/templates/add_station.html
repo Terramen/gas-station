@@ -30,7 +30,6 @@
     <form action="#" th:action="@{/saveStation}" th:object = "${station}" method="post">
         <input type="text" th:field = "*{location}" placeholder="Location" class="form-control mb-4 col-4">
         <input type="text" th:field = "*{phone}" placeholder="Phone" class="form-control mb-4 col-4">
-        <input type="text" th:field = "*{fuel}" placeholder="Fuel" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info col-2">Сохранить</button>
     </form>
 </div>

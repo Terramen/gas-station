@@ -8,9 +8,11 @@ import com.java.gasstation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -21,17 +23,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService, UserDetailsService{
     @Autowired
     private UserRepository userRepository;
-
-/*    @Override
-    public UserDetails loadUserByUsername(String email) {
-        User user = userRepository.findByEmail(email);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("Not found!");
-        }
-
-        return user;
-    }*/
 
     @Override
     public List<User> getAllUsers() {
@@ -57,12 +48,27 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     @Override
+    public void saveAdminUsers(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByEmail(email);
 
         user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + email));
 
         return user.map(MyUserDetails::new).get();
+    }
+
+    public Optional<User> getAuthenticatedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            return userRepository.findByEmail(userDetails.getUsername());
+        }
+        return null;
     }
 
 }

@@ -19,9 +19,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="/list">Список заправочных станций</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/fuel">Топливо</a>
-            </li>
         </ul>
         <form class="form-inline">
             <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
@@ -37,7 +34,7 @@
 <div class = "container">
     <h1>Изменение данных о пользователе</h1>
     <hr>
-    <form action="#" th:action="@{/saveUser}" th:object = "${user}" method="post">
+    <form action="#" th:action="@{/admin/users/adminSaveUser}" th:object = "${user}" method="post">
         <input type="hidden" th:field = "*{id}" />
         <input type="text" th:field = "*{firstName}" placeholder="First Name" class="form-control mb-4 col-4">
         <input type="text" th:field = "*{lastName}" placeholder="Last Name" class="form-control mb-4 col-4">
@@ -45,8 +42,8 @@
         <input type="hidden" th:field = "*{password}" placeholder="Password" class="form-control mb-4 col-4">
         <select class="form-control mb-4 col-4" th:field = "*{role}">
             <option value="" disabled>Выберите тип</option>
-            <option value="ROLE_ADMIN">admin</option>
-            <option value="ROLE_USER">user</option>
+            <option th:value="ROLE_ADMIN" th:text="admin"></option>
+            <option th:value="ROLE_USER" th:text="user"></option>
         </select>
         <button type="submit" class="btn btn-info col-2">Сохранить</button>
     </form>

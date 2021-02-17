@@ -31,7 +31,7 @@ public class FuelServiceImpl implements FuelService {
         if(optional.isPresent()) {
             fuel = optional.get();
         }else {
-            throw new RuntimeException("Станция не найдена " + id);
+            throw new RuntimeException("Топливо не найдено " + id);
         }
         return fuel;
     }

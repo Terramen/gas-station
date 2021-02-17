@@ -24,28 +24,34 @@
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" href="/admin">Админ-панель</a>
             </li>
+            <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                <a class="nav-link" href="/personalAccount">Личный кабинет</a>
+            </li>
         </ul>
         <form class="form-inline">
-            <a th:href = "@{/showSignUpForm}" class = "btn btn-primary mx-2">Зарегистрироваться</a>
-            <a th:href = "@{/showSignUpForm}" class = "btn btn-primary mx-2">Войти</a>
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                Вы вошли как:
+                <div sec:authentication="name"></div>
+            </div>
+            <a th:href = "@{/register}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Зарегистрироваться</a>
+            <a th:href = "@{/login}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Войти</a>
+            <a th:href = "@{/logout}" sec:authorize ="isAuthenticated()" class = "btn btn-primary mx-2">Выйти</a>
         </form>
     </div>
 </nav>
 <div align="center" class = "container my-2">
-    <h1>Station List</h1>
+    <h1>Список заправок</h1>
     <table border="1" class="table table-striped">
         <thead>
         <tr>
-            <th>Station Location</th>
-            <th>Station Phone</th>
-            <th>Station Fuel</th>
+            <th>Местоположение заправки</th>
+            <th>Телефон заправки</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="station : ${listStations}">
             <td th:text="${station.location}"></td>
             <td th:text="${station.phone}"></td>
-            <td th:text="${station.fuel}"></td>
         </tr>
         </tbody>
     </table>

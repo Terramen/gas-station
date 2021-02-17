@@ -2,6 +2,7 @@ package com.java.gasstation.controller;
 
 import com.java.gasstation.model.Role;
 import com.java.gasstation.model.User;
+import com.java.gasstation.service.StationService;
 import com.java.gasstation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,12 @@ public class UserController {
         }
         userService.saveUsers(user);
         return "redirect:/";
+    }
+
+    @PostMapping("/admin/users/adminSaveUser")
+    public String adminSaveUser(@ModelAttribute("user") User user) {
+        userService.saveAdminUsers(user);
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/users/update/{id}")

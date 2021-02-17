@@ -29,7 +29,7 @@ public class StationController {
     }
 
     @PostMapping("/admin/list/saveStation")
-    public String saveUser(@ModelAttribute("user") Station station) {
+    public String saveStation(@ModelAttribute("user") Station station) {
         stationService.saveStations(station);
         return "redirect:/admin/list";
     }

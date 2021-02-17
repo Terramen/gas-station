@@ -19,7 +19,7 @@
                 <a class="nav-link" href="/">Главная<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/list">Список заправочных станций</a>
+                <a class="nav-link" href="/admin/list">Список заправочных станций</a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" href="/admin">Админ-панель</a>
@@ -29,32 +29,33 @@
             </li>
         </ul>
         <form class="form-inline">
-            <a th:href = "@{/showSignUpForm}" class = "btn btn-primary mx-2">Зарегистрироваться</a>
-            <a th:href = "@{/showSignUpForm}" class = "btn btn-primary mx-2">Войти</a>
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                Вы вошли как:
+                <div sec:authentication="name"></div>
+            </div>
+            <a th:href = "@{/register}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Зарегистрироваться</a>
+            <a th:href = "@{/login}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Войти</a>
+            <a th:href = "@{/logout}" sec:authorize ="isAuthenticated()" class = "btn btn-primary mx-2">Выйти</a>
         </form>
     </div>
 </nav>
 <div align="center" class = "container my-2">
-    <h1>Список топлива</h1>
-    <a th:href = "@{/showSignUpForm}" class = "btn btn-primary mb-2 col-2">Добавить новый вид топлива</a>
+    <h1>Список заправок</h1>
+    <a th:href = "@{/admin/list/addStation}" class = "btn btn-primary mb-2 col-2">Список заправок</a>
     <table border="1" class="table table-striped">
         <thead>
         <tr>
-            <th>Название топлива</th>
-            <th>Количество топлива</th>
-            <th>Единицы измерения</th>
-            <th>Цена на топливо</th>
+            <th>Местоположение заправки</th>
+            <th>Телефон заправки</th>
             <th> Действия </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="fuel : ${listFuel}">
-            <td th:text="${fuel.name}"></td>
-            <td th:text="${fuel.count}"></td>
-            <td th:text="${fuel.unit}"></td>
-            <td th:text="${fuel.price}"></td>
-            <td> <a th:href="@{/showFormForUpdate/{id}(id=${fuel.id})}" class="btn btn-primary">Изменить</a>
-                <a th:href="@{/deleteUser/{id}(id=${fuel.id})}" class="btn btn-danger">Удалить</a></td>
+        <tr th:each="station : ${listStations}">
+            <td th:text="${station.location}"></td>
+            <td th:text="${station.phone}"></td>
+            <td> <a th:href="@{/admin/list/update/{id}(id=${station.id})}" class="btn btn-primary">Изменить</a>
+                <a th:href="@{/admin/list/delete/{id}(id=${station.id})}" class="btn btn-danger">Удалить</a></td>
         </tr>
         </tbody>
     </table>

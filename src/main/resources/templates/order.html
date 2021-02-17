@@ -35,26 +35,26 @@
     </div>
 </nav>
 <div align="center" class = "container my-2">
-    <h1>Список топлива</h1>
-    <a th:href = "@{/showSignUpForm}" class = "btn btn-primary mb-2 col-2">Добавить новый вид топлива</a>
+    <h1>Список заказов</h1>
     <table border="1" class="table table-striped">
         <thead>
         <tr>
-            <th>Название топлива</th>
+            <th>Местоположение заправки</th>
+            <th>Тип топлива</th>
             <th>Количество топлива</th>
-            <th>Единицы измерения</th>
-            <th>Цена на топливо</th>
-            <th> Действия </th>
+            <th>Email пользователя</th>
+            <th>Итоговая цена</th>
+            <th>Дата заказа</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="fuel : ${listFuel}">
-            <td th:text="${fuel.name}"></td>
-            <td th:text="${fuel.count}"></td>
-            <td th:text="${fuel.unit}"></td>
-            <td th:text="${fuel.price}"></td>
-            <td> <a th:href="@{/showFormForUpdate/{id}(id=${fuel.id})}" class="btn btn-primary">Изменить</a>
-                <a th:href="@{/deleteUser/{id}(id=${fuel.id})}" class="btn btn-danger">Удалить</a></td>
+        <tr th:each="order : ${listOrders}">
+            <td th:text="${order.station.location}"></td>
+            <td th:text="${order.fuel.name}"></td>
+            <td th:text="${order.count}"></td>
+            <td th:text="${order.user.email}"></td>
+            <td th:text="${order.price}"></td>
+            <td th:text="${order.orderDate}"></td>
         </tr>
         </tbody>
     </table>

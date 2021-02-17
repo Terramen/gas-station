@@ -21,11 +21,11 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Главная<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/list">Список заправочных станций</a>
-                </li>
                 <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                     <a class="nav-link" href="/admin">Админ-панель</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                    <a class="nav-link" href="/personalAccount">Личный кабинет</a>
                 </li>
             </ul>
             <form class="form-inline">
@@ -33,9 +33,9 @@
                     Вы вошли как:
                     <div sec:authentication="name"></div>
                 </div>
-                <a th:href = "@{/register}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Зарегистрироваться</a>
-                <a th:href = "@{/login}" sec:authorize ="!isAuthenticated()" class = "btn btn-primary mx-2">Войти</a>
-                <a th:href = "@{/logout}" sec:authorize ="isAuthenticated()" class = "btn btn-primary mx-2">Выйти</a>
+                <a th:href = "@{/register}" sec:authorize ="!isAuthenticated()" class = "btn btn-info mx-2">Зарегистрироваться</a>
+                <a th:href = "@{/login}" sec:authorize ="!isAuthenticated()" class = "btn btn-info mx-2">Войти</a>
+                <a th:href = "@{/logout}" sec:authorize ="isAuthenticated()" class = "btn btn-info mx-2">Выйти</a>
             </form>
         </div>
     </nav>
@@ -79,34 +79,32 @@
             <div>
                 <p align="center">Цена в BYN на <span th:text="${date}"></span></p>
             </div>
-            <div sec:authorize="hasRole('ROLE_ADMIN')">Text visible to admin.</div>
-            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-                Authenticated username:
-                <div sec:authentication="name"></div>
-            </div>
 
-<!--            <div sec:authorize = ”isAuthenticated()”>Text visible to auth.</div>-->
+
         </div>
     </section>
     <section class="page-section">
-<!--        <div class="block container">
-        <a href="/list" class="block-border block-padding first-block-background">
-            <div class="block-content">
-                fsdfsdfsdfsdfdsfsdfsfsdfsdfsfsfsdfssdfsdf
-            </div>
-        </a>
-    </div>-->
         <div class="block-border w-75 container first-block-background block__item">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <h5 class="card-title">Система лояльности</h5>
+                <h3 class="card-text">«Дзякуй» — программа благодарности</h3>
+                <ul>
+                    <li>Скидки и акции в мини-кафе и магазине</li>
+                    <li>Каждый вторник скидки на услуги</li>
+                    <li>Акции партнеров и рекламные игры</li>
+                </ul>
                 <a href="#" class="btn btn-primary">Button</a>
             </div>
         </div>
         <div class="block-border w-75 container second-block-background block__item">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <h5 class="card-title">Быстрая оплата топлива</h5>
+                <h3 class="card-text">Удобный и быстрый сервис оплат за топливо!</h3>
+                <ul>
+                    <li>привязка к Программе «Дзякуй»</li>
+                    <li>функция «Полный бак»</li>
+                    <li>быстрая оплата</li>
+                </ul>
                 <a href="#" class="btn btn-primary">Button</a>
             </div>
         </div>
